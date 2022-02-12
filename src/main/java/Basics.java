@@ -4,16 +4,32 @@ import org.testng.Assert;
 import pl.files.Payload;
 import pl.files.ReUsableMethods;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.equalTo;
 
 
 public class Basics {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        //TODO Auto-generated method stub
+        //validate if Add place API is working as expected
+        //Add place -> Update place with New Address -> Get Place to validate if New address is present in response
+
+        //given - all input detail
+        //when - Submit the API - resource, http method
+        //then - validate the response
+        //content of the file to String -> content of file can convert into Byte -> Byte data to String
+
         RestAssured.baseURI="https://www.rahulshettyacademy.com";
         String response = given().log().all().queryParam("key", "qaclick123")
                 .header("Content-Type", "application/json")
-                .body(Payload.addPlace())
+                .body(new String(Files.readAllBytes(Paths.get("C:\\TEMP\\addPlace.json"))))
+                //.body(Payload.addPlace())
                 .when().post("maps/api/place/add/json")
                 .then().assertThat().statusCode(200)
                 .body("scope", equalTo("APP"))
